@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Mental Health Predictor</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Mental Health Prediction</h1>
+
+<form action="/predict" method="post">
+
+<input type="number" name="age" placeholder="Age" required>
+
+<select name="gender">
+<option value="0">Male</option>
+<option value="1">Female</option>
+</select>
+
+<input type="number" name="sleep" placeholder="Sleep Hours" required>
+
+<input type="number" name="stress" placeholder="Stress Level (1-10)" required>
+
+<input type="number" name="social" placeholder="Social Support (1-10)" required>
+
+<input type="number" name="activity" placeholder="Physical Activity (1-10)" required>
+
+<input type="number" name="work" placeholder="Work Hours" required>
+
+<button type="submit">Predict</button>
+
+</form>
+
+{% if prediction %}
+
+<div class="result">
+<h2>{{ prediction }}</h2>
+</div>
+
+{% endif %}
+
+</div>
+
+</body>
+</html>

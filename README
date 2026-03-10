@@ -1,0 +1,24 @@
+Mental Health Prediction using Machine Learning
+
+This project predicts mental health risk based on factors like:
+
+Age
+Sleep hours
+Stress level
+Work hours
+Physical activity
+
+Technologies used:
+
+Python
+Scikit-learn
+Flask
+HTML CSS
+Machine Learning
+
+Features:
+
+Web interface
+Prediction model
+Data visualization
+Feature importance analysis

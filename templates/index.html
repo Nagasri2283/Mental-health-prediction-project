@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Mental Health Predictor</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Mental Health Prediction</h1>
+
+{% if error %}
+<div class="alert-error">{{ error }}</div>
+{% endif %}
+
+<form action="/predict" method="post">
+
+<input type="number" name="age" placeholder="Age" value="{{ form_values.age if form_values else '' }}" required>
+
+<select name="gender">
+<option value="0" {% if form_values and form_values.gender == '0' %}selected{% endif %}>Male</option>
+<option value="1" {% if form_values and form_values.gender == '1' %}selected{% endif %}>Female</option>
+</select>
+
+<input type="number" step="0.1" name="sleep" placeholder="Sleep Hours" value="{{ form_values.sleep if form_values else '' }}" required>
+
+<input type="number" name="stress" placeholder="Stress Level (1-10)" min="1" max="10" value="{{ form_values.stress if form_values else '' }}" required>
+
+<input type="number" name="social" placeholder="Social Support (1-10)" min="1" max="10" value="{{ form_values.social if form_values else '' }}" required>
+
+<input type="number" name="activity" placeholder="Physical Activity (1-10)" min="1" max="10" value="{{ form_values.activity if form_values else '' }}" required>
+
+<input type="number" name="work" placeholder="Work Hours" value="{{ form_values.work if form_values else '' }}" required>
+
+<button type="submit">Predict</button>
+
+</form>
+
+{% if prediction %}
+<div class="result result-{{ prediction | lower }}">
+  <h2>Predicted risk: {{ prediction }}</h2>
+
+  <div class="prob-bars">
+    {% for label, pct in probabilities.items() %}
+    <div class="prob-row">
+      <span class="prob-label">{{ label }}</span>
+      <div class="prob-track"><div class="prob-fill" style="width: {{ pct }}%"></div></div>
+      <span class="prob-pct">{{ pct }}%</span>
+    </div>
+    {% endfor %}
+  </div>
+
+  <p class="disclaimer">
+    This is a portfolio demo trained on synthetic data — not a medical diagnosis.
+    If you're struggling, please reach out to a mental health professional.
+  </p>
+</div>
+
+<div class="importance-card">
+  <h3>What drives this prediction</h3>
+  <img src="{{ url_for('static', filename='feature_importance.png') }}" alt="Feature importance chart" />
+</div>
+{% endif %}
+
+</div>
+
+</body>
+</html>
